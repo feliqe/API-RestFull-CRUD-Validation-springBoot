@@ -1,0 +1,54 @@
+Api restFull - CRUD
+
+Manejo de metodologia CRUD
+
+--------------- crear proyectos -----------------------
+-dependencias
+    -- spring web
+    -- spring data jpa
+    -- spring boot devTools
+    -- mySql driver
+    -- validation I/O
+
+--------------- logica de proyecto ---------------------
+- se crean la tabla en mysql products.
+- se crear el modelo product con los mismo campos de la base de datos.
+- en ProductRepository se realiza la asociacion para que puendan acceder al modelo desde los controladores.
+- en ProductService crear metodo crud para estar listo para usarse.
+- se crear una implemnetacion ProductServiceImpl para poder usar los metodos y manipularlos es la logica del negocio.
+- en controlador se crear ProductController para manipualr las rutas.
+- se ejecuta pararevisarlo por los metodo de CRUD de postman.
+- en postman selecionar POST en body->raw->JSON colocamos el texto.
+    -- realizando esta accion tendra datos guardados pero por el navegador para ir consultando y tener datos para CRUD
+    "name": "Producto limpieza",
+    "price": 5000,
+    "description": "alguna description para el producto de limpieza!"
+- realizar validaciones y restricciones del contenido de cada campos en el modal Product.
+- para ver los mensajes de error de las condiciones del modal en las funciones del controlador se ingresar los BindingResult y agregar dentro de la funcion donde se ejecutara el mensaje de error.
+- en messages.properties es donde se coloca el texto que aparecera con cada regla de negocio que se indico en Product, se crea un archivo en la raiz AppCongi por que es una hoja de configuracion.
+- dentro de las condiciones se colocar messages y solo el nombre para indicar que tome el valor de properties -    @NotEmpty(message = "{NotEmpty.product.name}")
+- en la class de ProductValidation es donde se definiran las reglas de negocio de los campos Product
+- se realiza la asociacion de ProductValidation en e controlador
+- la validacion por mdeio de una funcion se realizan en la carptea de validation -> IsRequired : es la interfas de como validar y en RequiredValidation : es la funcion de que se validara (si es null, si es vacio o ambas con isBlack)
+- la validacion del contenido de los campos se realiza por medio de la carpeta de validation usando la clase y la interfas para realacionar entre que validar y el tipo de valor, indicando el nombre del metodo en el modelo de la tabla
+
+
+--------------- orden de creacion de documentos --------
+- se crean los package
+    -- controllers
+    -- entities
+    -- repositories
+    -- services
+- se crea la class en entities - Product
+- se crea la class en repositories - ProductRepository
+- se crea una interface la class en services - ProductService
+- se crear la class en services - ProductServiceImpl
+- se crear el controlador - ProductController
+- en resource se crea un archivo messages.properties
+- en la raiz se crea un archivo AppConfig
+- se crear un archivo en la raiz con el nombre de ProductValidation
+- se crea el package en la raiz validation
+- se crea la class en validation IsRequired
+- se crea la class en validation RequiredValidation
+- se crea la clase en validacion IsExistsDb
+- se crea la clase en validacion IsExistsDbValidation
