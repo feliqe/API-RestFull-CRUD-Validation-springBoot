@@ -1,6 +1,14 @@
-Api restFull - CRUD
+Users Spring Security y JWT
 
-Manejo de metodologia CRUD
+Que es un JSON Web Tokens?
+- es para implementar seguridad en la aplicaciones API REST basado en RFC 7519, que este basadas en javaScript, las cuales son:
+ -- son escaladles
+ -- codificado y descodificado en Base64
+ -- contiene reclamaciones o claims
+ -- firmado mediante una llave secreta
+ -- compacto
+ -- autonomo
+ -- seguridad
 
 --------------- crear proyectos -----------------------
 -dependencias
@@ -9,6 +17,7 @@ Manejo de metodologia CRUD
     -- spring boot devTools
     -- mySql driver
     -- validation I/O
+    -- spring Security
 
 --------------- logica de proyecto ---------------------
 - se crean la tabla en mysql products.
@@ -32,8 +41,41 @@ Manejo de metodologia CRUD
 - la validacion por mdeio de una funcion se realizan en la carptea de validation -> IsRequired : es la interfas de como validar y en RequiredValidation : es la funcion de que se validara (si es null, si es vacio o ambas con isBlack)
 - la validacion del contenido de los campos se realiza por medio de la carpeta de validation usando la clase y la interfas para realacionar entre que validar y el tipo de valor, indicando el nombre del metodo en el modelo de la tabla
 
+- se crear las clase en los entities (modeles) donde tendra la informacion de la base de datos, despues los repositorios donde se asociara las llaves de las entites, despues los servicios donde se realiza la funciones que tendra cada accion del CRUD, depues en services usar el implemnte para poder usar darles acciones a los metodos de las funciones indicadas en servicios
+- en SpringSecurityConfig es donde inidcamos la funcion de encriptacion, tambien se inidca que mostra de la autentificacion
+- en UserController se realiza los paso de validacion y mensaje en cado del campo ser obligatorio
+- se usa ExistsByUsernameValidation para poder controlar el metodo de la validacion
+- en JpaUserDetailService buscar el usaerna me cuando el usuario se alla logeado y asi saber cuando esta logeado
 
---------------- orden de creacion de documentos --------
+- documentacion de JSONWebToken https://jwt.io/libraries?language=Java, es donde viaje al autentificacion del usuario por medio de un encriptado donde tiene los datos del username, y la llave que tiene el servidor donde no se mueve al fontend
+
+- para trabajar con JWT en la pagina https://github.com/jwtk/jjwt , se copia el codigo de MAVEL (el que dejo en el pie), se pega en el POM al final pero dentro de la dependencias, se peude mostrar el resultado del token generado por la aplicacion
+
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-api</artifactId>
+                <version>0.12.5</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>0.12.5</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-jackson</artifactId> <!-- or jjwt-gson if Gson is preferred -->
+                <version>0.12.5</version>
+                <scope>runtime</scope>
+            </dependency>
+
+- en TokenJwtConfig es donde tendras la variables donde se indica que tipo de encriptacion se usara para el JWT y las variables que se le pasar ela cliente en los proceso que estan en JwtAuthenticationFilter
+
+- en JwtValidationFilter es donde ser realizara la validacion del token con los datos de autentificacion ingresados
+- se realiza una configuracion para poder tomar todos los metodos de scrum de envio y recepcion de peticiones desde la url
+
+
+--------------- orden de creación de documentos --------
 - se crean los package
     -- controllers
     -- entities
@@ -52,3 +94,20 @@ Manejo de metodologia CRUD
 - se crea la class en validation RequiredValidation
 - se crea la clase en validacion IsExistsDb
 - se crea la clase en validacion IsExistsDbValidation
+- se crea la clase en entities User
+- se crea la clase en entities Role
+- se crea la clase en repository UserRepository
+- se crea la clase en repository RoleRepository
+- se crea la class en service UserService
+- se crea la clase en service UserServiceImpl
+- se crea en las raiz el package Security
+- se crea la clase en Security SpringSecurityConfig
+- se crea la clase en controller UserController
+- se crea la clase en validacion ExistsByUsername
+- se crea la clase en validacion ExistsByUsernameValidation
+- se crea la clase en service JpaUserDetailService
+- se crea el package en Security securityFilter
+- se crea la clase en securityFilter JwtAuthenticationFilter
+- se crea la clase en securityFilter TokenJwtConfig
+- se crea la clase en securityFilter JwtValidationFilter
+- se crea la abstracta clase en Security SimpleGrantedAuthorityJsonCreator
